@@ -75,7 +75,7 @@ jobs:
           docker compose -f docker-compose.ci.yml exec -u root -T app cp ./envs/.env.e2e.example ./envs/.env.e2e
 
       - name: run unit and integration tests
-        run: docker compose -f docker-compose.ci.yml run -T app yarn test --coverage --detectOpenHandles --forceExit || true
+        run: docker compose -f docker-compose.ci.yml run -T app yarn test --coverage --detectOpenHandles
       
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
