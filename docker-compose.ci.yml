@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: .
+    restart: on-failure
+    ports:
+      - 3000:3000
+    volumes:
+      - '/etc/timezone:/etc/timezone:ro'
+      - '/etc/localtime:/etc/localtime:ro'
+      - ./envs:/home/node/app/envs
+    labels:
+      filebeat_collector: true
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:16
+    restart: always
+    tty: true
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpass
+      POSTGRES_DB: simple_schedeasy
+    tmpfs:
+      - /var/lib/postgresql/data
+    security_opt:
+      - seccomp:unconfined
+    command: >
+      postgres
+      -c shared_buffers=256MB
+      -c effective_cache_size=512MB
+      -c work_mem=16MB
+      -c maintenance_work_mem=64MB
+      -c max_connections=100
+      -c checkpoint_timeout=10min
+      -c wal_buffers=16MB
+      -c synchronous_commit=off
+      -c full_page_writes=off
