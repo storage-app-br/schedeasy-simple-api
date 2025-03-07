@@ -118,8 +118,10 @@ jobs:
           git_committer_name: "github-actions[bot]"  # Nome do committer
           git_committer_email: "github-actions[bot]@users.noreply.github.com"
 
-      - name: Configurar usuário Git
+      - name: Commit changes
         run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Bump docker version"
 
