@@ -128,4 +128,4 @@ jobs:
         run: |
           git push https://github.com/${{ github.repository }}.git HEAD:develop
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN_ACCESS }}
