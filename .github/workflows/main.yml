@@ -7,7 +7,7 @@ name: CI - sonar cloud
 
 on:
   push:
-    branches: ['develop']
+    branches: ['main']
     # Publish semver tags as releases.
     tags: ['v*.*.*']
   # pull_request:
