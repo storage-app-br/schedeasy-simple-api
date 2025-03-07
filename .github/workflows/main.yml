@@ -77,7 +77,7 @@ jobs:
           docker compose -f docker-compose.ci.yml exec -u root -T app cp ./envs/.env.e2e.example ./envs/.env.e2e
 
       - name: run unit and integration tests
-        run: docker compose -f docker-compose.ci.yml run -T app yarn test --coverage --detectOpenHandles
+        run: docker compose -f docker-compose.ci.yml run -T app yarn test:cov
       
       - uses: SonarSource/sonarqube-scan-action@v4
         env:
