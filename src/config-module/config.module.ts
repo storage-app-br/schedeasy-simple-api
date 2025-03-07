@@ -6,26 +6,6 @@ import {
 import Joi from 'joi';
 import { join } from 'path';
 
-const joiJson = Joi.extend((joi) => {
-  return {
-    type: 'object',
-    base: joi.object(),
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    coerce(value, _schema) {
-      if (value[0] !== '{' && !/^\s*\{/.test(value)) {
-        return { value };
-      }
-
-      try {
-        return { value: JSON.parse(value) };
-      } catch (err) {
-        console.error(err);
-        return { value };
-      }
-    },
-  };
-});
-
 type DB_SCHEMA_TYPE = {
   API_TARGET_PORT?: number;
   API_PORT?: number;
@@ -81,9 +61,9 @@ export class ConfigModule extends NestConfigModule {
     return super.forRoot({
       isGlobal: true,
       envFilePath: [
-        ...(Array.isArray(envFilePath) ? envFilePath! : [envFilePath!]),
-        join(process.cwd(), '.envs', `.env.${process.env.NODE_ENV!}`),
-        join(process.cwd(), '.envs', `.env`),
+        ...(Array.isArray(envFilePath) ? envFilePath : [envFilePath!]),
+        join(process.cwd(), 'envs', `.env.${process.env.NODE_ENV!}`),
+        join(process.cwd(), 'envs', `.env`),
       ],
       validationSchema: Joi.object({
         ...CONFIG_DB_SCHEMA,

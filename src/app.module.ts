@@ -9,7 +9,7 @@ import { SchedulesModule } from './schedules/schedules.module';
     PrometheusModule.register(),
     ConfigModule.forRoot(),
     DatabaseModule,
-    SchedulesModule
-  ]
+    SchedulesModule,
+  ],
 })
 export class AppModule { }
