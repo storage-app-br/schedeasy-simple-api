@@ -105,30 +105,24 @@ jobs:
           cd k8s
           kustomize edit set image node-api=$DOCKER_USERNAME/schedeasy-simple-api:$GITHUB_SHA
 
-      - name: Configurar GPG
-        run: |
-          # Instalar GPG
-          sudo apt-get install -y gnupg
-
-          # Importar a chave privada
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
-
-          # Desativar pinentry interativo
-          echo "use-agent" >> ~/.gnupg/gpg.conf
-          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
-          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg.conf
-
-          # Configurar as variáveis de ambiente GPG
-          export GPG_TTY=$(tty)
-          gpg --list-secret-keys --keyid-format LONG
-          git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}
-          git config --global commit.gpgSign true
+      - name: Import GPG
+        # You may pin to the exact commit or the version.
+        # uses: crazy-max/ghaction-import-gpg@cb9bde2e2525e640591a934b1fd28eef1dcaf5e5
+        uses: crazy-max/ghaction-import-gpg@v6.2.0
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}  # Chave privada GPG exportada como versão ASCII armada ou base64
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}  # Senha da chave GPG (opcional)
+          git_commit_gpgsign: true  # Assina todos os commits automaticamente
+          git_tag_gpgsign: true  # Assina todas as tags automaticamente
+          git_push_gpgsign: true  # Assina todos os pushes automaticamente
+          git_user_signingkey: ${{ secrets.GPG_KEY_ID }}  # ID da chave de assinatura do GPG
+          git_committer_name: "github-actions[bot]"  # Nome do committer
+          git_committer_email: "github-actions[bot]@users.noreply.github.com"
 
       - name: Configurar usuário Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -am "Bump docker version"
+          git add .
+          git commit -m "Bump docker version"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
