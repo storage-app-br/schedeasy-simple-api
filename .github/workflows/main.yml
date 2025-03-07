@@ -105,23 +105,10 @@ jobs:
           cd k8s
           kustomize edit set image node-api=$DOCKER_USERNAME/schedeasy-simple-api:$GITHUB_SHA
 
-      - name: Import GPG
-        # You may pin to the exact commit or the version.
-        # uses: crazy-max/ghaction-import-gpg@cb9bde2e2525e640591a934b1fd28eef1dcaf5e5
-        uses: crazy-max/ghaction-import-gpg@v6.2.0
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}  # Chave privada GPG exportada como versão ASCII armada ou base64
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}  # Senha da chave GPG (opcional)
-          git_commit_gpgsign: true  # Assina todos os commits automaticamente
-          git_tag_gpgsign: true  # Assina todas as tags automaticamente
-          git_push_gpgsign: false  # Assina todos os pushes automaticamente
-          git_committer_name: "igorlage"  # Nome do committer
-          git_committer_email: "igor-rl@hotmail.com"
-
       - name: Commit changes
         run: |
-          git config --global user.name "igorlage"
-          git config --global user.email "igor-rl@hotmail.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git commit -am "Bump docker version"
 
       - name: Push
