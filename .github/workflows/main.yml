@@ -114,19 +114,20 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}  # Senha da chave GPG (opcional)
           git_commit_gpgsign: true  # Assina todos os commits automaticamente
           git_tag_gpgsign: true  # Assina todas as tags automaticamente
-          git_push_gpgsign: true  # Assina todos os pushes automaticamente
+          git_push_gpgsign: false  # Assina todos os pushes automaticamente
           git_committer_name: "igorlage"  # Nome do committer
           git_committer_email: "igor-rl@hotmail.com"
 
-      - name: Commit changes
+      - name: Configurar usuário Git
         run: |
-          git config --global user.name "igorlage"
-          git config --global user.email "igor-rl@hotmail.com"
+          git config --global user.name "igorlage"  # Definindo o nome do usuário
+          git config --global user.email "igor-rl@hotmail.com"  # Definindo o e-mail do usuário
+          git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}  # Usando a chave GPG para assinar os commits
+          git config --global commit.gpgSign true  # Garantir que todos os commits sejam assinados
           git add .
-          git commit -m "Bump docker version"
+          git commit -m "Bump docker version"  # Realiza o commit com assinatura GPG
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          repository: storage-app-br/schedeasy-simple-api
+      - name: Push changes using GITHUB_TOKEN
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/storage-app-br/schedeasy-simple-api.git
+          git push origin developer  # Push para a branch "developer" ou qualquer outra desejada
