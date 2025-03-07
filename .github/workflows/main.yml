@@ -113,6 +113,11 @@ jobs:
           # Importar a chave privada
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
 
+          # Desativar pinentry interativo
+          echo "use-agent" >> ~/.gnupg/gpg.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg.conf
+
           # Configurar as variáveis de ambiente GPG
           export GPG_TTY=$(tty)
           gpg --list-secret-keys --keyid-format LONG
