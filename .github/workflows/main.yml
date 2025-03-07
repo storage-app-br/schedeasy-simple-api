@@ -120,7 +120,7 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config --global user.name "github-actions[bot]"
+          git config --global user.name "igorlage"
           git config --global user.email "igor-rl@hotmail.com"
           git add .
           git commit -m "Bump docker version"
