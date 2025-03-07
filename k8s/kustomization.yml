@@ -2,15 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-<<<<<<< HEAD
-  - deploy.yml
-  - service.yml
-
-images:
-  - name: node-api
-    newName: igorlage/schedeasy-simple-api
-    newTag: sha
-=======
 - deploy.yml
 - service.yml
 
@@ -18,4 +9,3 @@ images:
 - name: node-api
   newName: igorlage/schedeasy-simple-api
   newTag: 263f18a0b14a816bfa2a0af7120777409c4961ce
->>>>>>> 92b972ac6a6986a6da1d61e9e327c064ff8372d5
