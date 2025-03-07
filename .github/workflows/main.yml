@@ -105,14 +105,17 @@ jobs:
           cd k8s
           kustomize edit set image node-api=$DOCKER_USERNAME/schedeasy-simple-api:$GITHUB_SHA
 
-      - name: Setup GPG for signed commits
+      - name: Setup Git Signing
         run: |
-          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
-          GPG_KEY_ID=$(gpg --list-secret-keys --keyid-format LONG | grep 'sec' | awk '{print $2}' | cut -d'/' -f2)
-          git config --global user.signingkey "$GPG_KEY_ID"
-          git config --global commit.gpgsign true
-        env:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          git config --local user.email "action@github.com"  # Email da chave GPG
+          git config --local user.name "GitHub Action"
+          git config --local commit.gpgSign true
+          git config --local gpg.program gpg
+          git config --local user.signingkey ${{ secrets.GPG_PRIVATE_KEY_ID }}
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          echo "use-agent" >> ~/.gnupg/gpg.conf
+          gpgconf --reload gpg-agent
 
       - name: Commit changes
         run: |
