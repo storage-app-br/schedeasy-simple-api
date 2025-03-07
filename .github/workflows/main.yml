@@ -126,4 +126,4 @@ jobs:
 
       - name: Push changes
         run: |
-          git push https://igorlage:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:develop
+          git push https://github-actions[bot]:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:develop
