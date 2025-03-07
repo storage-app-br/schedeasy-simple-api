@@ -13,6 +13,7 @@ yarn-error.log*
 lerna-debug.log*
 .yarn/
 .npm-cache/
+.scannerwork/
 
 # OS
 .DS_Store
