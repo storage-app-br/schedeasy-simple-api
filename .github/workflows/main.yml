@@ -118,19 +118,14 @@ jobs:
           git_committer_name: "igorlage"  # Nome do committer
           git_committer_email: "igor-rl@hotmail.com"
 
-      - name: Configurar usuário Git
+      - name: Commit changes
         run: |
-          git config --global user.name "igorlage"  # Definindo o nome do usuário
-          git config --global user.email "igor-rl@hotmail.com"  # Definindo o e-mail do usuário
-          git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}  # Usando a chave GPG para assinar os commits
-          git config --global commit.gpgSign true  # Garantir que todos os commits sejam assinados
-          git add .
-          git commit -m "Bump docker version"  # Realiza o commit com assinatura GPG
+          git config --global user.name "igorlage"
+          git config --global user.email "igor-rl@hotmail.com"
+          git commit -am "Bump docker version"
 
       - name: Push changes
         run: |
-          git config --global user.name "igorlage"  # Definindo o nome do usuário
-          git config --global user.email "igor-rl@hotmail.com"  # Definindo o e-mail do usuário
-          git push origin develop
+          git push https://github.com/${{ github.repository }}.git HEAD:develop
         env:
-          ACTIONS_TOKEN_ACCESS: ${{ secrets.ACTIONS_TOKEN_ACCESS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
