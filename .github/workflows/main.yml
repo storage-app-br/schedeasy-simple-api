@@ -105,27 +105,25 @@ jobs:
           cd k8s
           kustomize edit set image node-api=$DOCKER_USERNAME/schedeasy-simple-api:$GITHUB_SHA
 
-      - name: Configure GPG
+      - name: Configurar GPG
         run: |
-          mkdir -p ~/.gnupg
-          chmod 700 ~/.gnupg
+          # Instalar GPG
+          sudo apt-get install -y gnupg
+
+          # Importar a chave privada
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
-          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
-          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
-          gpgconf --kill gpg-agent
-          gpgconf --reload gpg-agent
-          git config --global gpg.program gpg
-          git config --global user.signingkey $(gpg --list-secret-keys --keyid-format=long | grep sec | awk '{print $2}' | cut -d'/' -f2)
+
+          # Configurar as variáveis de ambiente GPG
+          export GPG_TTY=$(tty)
+          gpg --list-secret-keys --keyid-format LONG
+          git config --global user.signingkey ${{ secrets.GPG_KEY_ID }}
           git config --global commit.gpgSign true
 
-
-      - name: Commit Changes
+      - name: Configurar usuário Git
         run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git add .
-          echo "${{ secrets.GPG_PASSPHRASE }}" | gpg --batch --passphrase-fd 0 --pinentry-mode loopback --sign
-          git commit -S -m "Bump docker version"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "Bump docker version"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
