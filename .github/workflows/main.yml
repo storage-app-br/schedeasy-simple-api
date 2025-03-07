@@ -118,14 +118,9 @@ jobs:
           git_committer_name: "igorlage"  # Nome do committer
           git_committer_email: "igor-rl@hotmail.com"
 
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
           git config --global user.name "igorlage"
           git config --global user.email "igor-rl@hotmail.com"
           git commit -am "Bump docker version"
-
-      - name: Push changes
-        run: |
-          git push https://github.com/${{ github.repository }}.git HEAD:develop
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN_ACCESS }}
+          git push origin develop
