@@ -1,0 +1,21 @@
+FROM node:23.9.0-alpine
+
+# Instala Redis, GPG e pinentry (necessário para autenticação GPG)
+RUN apk --no-cache add redis gnupg pinentry
+
+# Configura ambiente para GPG
+ENV GPG_TTY=/dev/console
+RUN mkdir -p /home/node/.gnupg && \
+    chmod 700 /home/node/.gnupg && \
+    echo "use-agent" >> /home/node/.gnupg/gpg.conf && \
+    echo "pinentry-mode loopback" >> /home/node/.gnupg/gpg.conf
+
+# Configuração do shell
+RUN touch /home/node/.bashrc && echo "PS1='\w\$ '" >> /home/node/.bashrc
+
+# Configuração do cache do npm
+RUN npm config set cache /home/node/schedeasy-simple-api/.npm-cache --global
+
+# Define usuário e diretório de trabalho
+USER node
+WORKDIR /home/node/schedeasy-simple-api

@@ -1,0 +1,19 @@
+services:
+  schedeasy-simple-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: ["/bin/sh", "-c", "./.docker/start.sh"]
+    ports:
+      - "${API_PORT}:${API_TARGET_PORT}"
+    volumes:
+      - ../:/home/node/schedeasy-simple-api
+      - '/etc/timezone:/etc/timezone:ro'
+      - '/etc/localtime:/etc/localtime:ro'
+      - ~/.gnupg:/home/node/.gnupg
+    environment:
+      - GPG_TTY=/dev/console
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      filebeat_collector: true

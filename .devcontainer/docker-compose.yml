@@ -1,0 +1,5 @@
+services:
+  schedeasy-simple-api:
+    volumes:
+      - ../:/home/node/app:cached
+ 
