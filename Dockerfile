@@ -21,7 +21,6 @@ USER node
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
 COPY --chown=node:node --from=builder /home/node/app/dist ./dist
-COPY --chown=node:node --from=builder /home/node/app/assets ./assets
 COPY --chown=node:node --from=builder /home/node/app/node_modules ./node_modules
 COPY --chown=node:node --from=builder /home/node/app/package.json ./
 EXPOSE 3000

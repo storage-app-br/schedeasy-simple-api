@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-api
+  template:
+    metadata:
+      labels:
+        app: node-api
+    spec:
+      containers:
+      - name: node-api
+        image: node-api
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: 'development'
+        - name: DB_VENDOR
+          value: 'postgres'
+        - name: DB_HOST
+          value: host.docker.internal
+        - name: DB_PORT
+          value: '5432'
+        - name: DB_USERNAME
+          value: 'pguser'
+        - name: DB_PASSWORD
+          value: 'pgpass'
+        - name: DB_DATABASE
+          value: 'simple_schedeasy'
+        - name: DB_LOGGING
+          value: 'false'
+        - name: SYNCHRONIZE
+          value: 'false'
