@@ -1,4 +1,4 @@
-FROM node:20.16.0-slim AS development
+FROM node:23.9.0-alpine AS development
 USER node
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
@@ -7,7 +7,7 @@ RUN yarn install
 COPY --chown=node:node . .
 CMD [ "tail", "-f", "/dev/null" ]
 
-FROM node:20.16.0-slim AS builder
+FROM node:23.9.0-alpine AS builder
 USER node
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
@@ -16,7 +16,7 @@ RUN yarn build
 ENV NODE_ENV=production
 RUN yarn install  --production=true
 
-FROM node:20.16.0-slim AS production
+FROM node:23.9.0-alpine AS production
 USER node
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
