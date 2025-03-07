@@ -129,6 +129,8 @@ jobs:
 
       - name: Push changes
         run: |
+          git config --global user.name "igorlage"  # Definindo o nome do usuário
+          git config --global user.email "igor-rl@hotmail.com"  # Definindo o e-mail do usuário
           git push origin develop
         env:
           ACTIONS_TOKEN_ACCESS: ${{ secrets.ACTIONS_TOKEN_ACCESS }}
