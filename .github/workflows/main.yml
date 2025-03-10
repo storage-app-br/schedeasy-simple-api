@@ -121,18 +121,24 @@ jobs:
 
   create-pr:
     runs-on: ubuntu-latest
-    needs: run-cd
+    needs: run-cd  # Executa após o 'run-cd'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up GitHub CLI
-        uses: cli/cli-action@v2  # Ação para instalar o GitHub CLI
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install gh
 
       - name: Create Pull Request
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Passando o token para o GitHub CLI
         run: |
-          # Use GitHub CLI to create a PR from develop to main
+          # Autenticar com o GitHub CLI usando o token
+          echo $GH_TOKEN | gh auth login --with-token
+          
+          # Criar o PR de develop para main
           gh pr create --base main --head develop --title "Auto PR from Develop to Main" --body "This PR was created automatically after the CI pipeline." --label "auto-pr"
+
 
