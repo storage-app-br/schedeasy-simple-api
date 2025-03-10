@@ -126,12 +126,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create Pull Request
+      - name: pull-requester
         uses: n3tuk/action-pull-requester@v1.3.0
         with:
-          title-minimum: 25  # Título mínimo para o PR
-          body-minimum: 100  # Corpo mínimo para o PR
-          body-split: "## Checklist"  # Separa o corpo do PR com base nesse marcador
-          label-prefixes: "auto-pr"  # Prefixo para etiquetas no PR
-          label-prefix-mode: "all"  # Todos os prefixos devem corresponder
-          auto-assign: true  # Atribui automaticamente ao criador do PR
+          base-branch: "main"  # Branch de destino (onde será feito o merge)
+          head-branch: "develop"  # Branch de origem (de onde virão as mudanças)
+          auto-assign: true  # Atribui automaticamente o PR ao criador (ou a quem configurado)
+          label-prefixes: "auto-pr"
