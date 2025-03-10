@@ -23,7 +23,7 @@ spec:
         - name: DB_VENDOR
           value: 'postgres'
         - name: DB_HOST
-          value: "172.19.144.1"
+          value: "172.18.0.2"
         - name: DB_PORT
           value: '5432'
         - name: DB_USERNAME
