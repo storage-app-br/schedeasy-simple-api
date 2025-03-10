@@ -23,7 +23,7 @@ spec:
         - name: DB_VENDOR
           value: 'postgres'
         - name: DB_HOST
-          value: host.docker.internal
+          value: "172.19.144.1"
         - name: DB_PORT
           value: '5432'
         - name: DB_USERNAME
