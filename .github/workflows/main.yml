@@ -119,17 +119,13 @@ jobs:
       #     repository: ${{ github.repository }}
       #     branch: ${{ github.ref }}
       
-  create-pr:
-    runs-on: ubuntu-latest
-    needs: run-cd  # Executa após o 'run-cd'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
-      - name: pull-requester
-        uses: n3tuk/action-pull-requester@v1.3.0
+  pull-request:
+    runs-on: ubuntu-latest
+    needs: run-cd
+    steps:
+      - uses: actions/checkout@v3
+      - name: pull-request
+        uses: diillson/auto-pull-request@v1.0.1
         with:
-          base-branch: "main"  # Branch de destino (onde será feito o merge)
-          head-branch: "develop"  # Branch de origem (de onde virão as mudanças)
-          auto-assign: true  # Atribui automaticamente o PR ao criador (ou a quem configurado)
-          label-prefixes: "auto-pr"
+          destination_branch: "main"
