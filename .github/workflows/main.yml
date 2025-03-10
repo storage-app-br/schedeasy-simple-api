@@ -129,9 +129,9 @@ jobs:
       - name: Create Pull Request
         uses: n3tuk/action-pull-requester@v1.3.0
         with:
-          title-minimum: 25  # Define o mínimo de caracteres para o título
-          body-minimum: 100  # Define o mínimo de caracteres para o corpo do PR
-          body-split: "## Checklist"  # Define o delimitador de corpo do PR
-          label-prefixes: "auto-pr"  # Prefixo para adicionar etiquetas ao PR
-          label-prefix-mode: "all"  # Define se todos os prefixos precisam corresponder
+          title-minimum: 25  # Título mínimo para o PR
+          body-minimum: 100  # Corpo mínimo para o PR
+          body-split: "## Checklist"  # Separa o corpo do PR com base nesse marcador
+          label-prefixes: "auto-pr"  # Prefixo para etiquetas no PR
+          label-prefix-mode: "all"  # Todos os prefixos devem corresponder
           auto-assign: true  # Atribui automaticamente ao criador do PR
