@@ -119,15 +119,19 @@ jobs:
       #     repository: ${{ github.repository }}
       #     branch: ${{ github.ref }}
       
+  create-pr:
+    runs-on: ubuntu-latest
+    needs: run-cd  # Executa após o 'run-cd'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Create Pull Request
         uses: n3tuk/action-pull-requester@v1.3.0
         with:
-          title: "Auto PR from Develop to Main"  # Título do PR
-          body: |
-            This PR was automatically created by the CI pipeline.
-            It merges the latest changes from `develop` into `main`.
-          base-branch: "main"
-          head-branch: "develop"
-          auto-assign: true
-          label-prefixes: "auto-pr"
-          body-minimum: 50 
+          title-minimum: 25  # Define o mínimo de caracteres para o título
+          body-minimum: 100  # Define o mínimo de caracteres para o corpo do PR
+          body-split: "## Checklist"  # Define o delimitador de corpo do PR
+          label-prefixes: "auto-pr"  # Prefixo para adicionar etiquetas ao PR
+          label-prefix-mode: "all"  # Define se todos os prefixos precisam corresponder
+          auto-assign: true  # Atribui automaticamente ao criador do PR
