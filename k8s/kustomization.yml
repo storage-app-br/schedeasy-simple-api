@@ -8,4 +8,4 @@ resources:
 images:
 - name: node-api
   newName: igorlage/schedeasy-simple-api
-  newTag: ee1c1e3704a7c0ff2621aa99ba170ed0f4782ae4
+  newTag: 9df059245e8247da3e7cfe6b3b29942910c7b829
